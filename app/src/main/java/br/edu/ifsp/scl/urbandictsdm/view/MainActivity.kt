@@ -32,21 +32,27 @@ class MainActivity : AppCompatActivity() {
                         mostrarSignificados(it)
                     }
                 )
+            } else {
+                viewModel.buscaMoedas()
             }
         }
     }
 
     private fun mostrarSignificados(resposta: Response) {
         val significados = StringBuffer()
-        resposta.list.withIndex().forEach{
+        resposta.list.withIndex().forEach {
             significados.append("<font color='#6200ee'><b>Significado ${it.index + 1}:</b></font> ${it.value.definition} <br>")
             significados.append("<b>Exemplo:</b> ${it.value.example}<br>")
             significados.append("<b>Autor:</b> ${it.value.author}<br><br>")
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            significadoTv.setText(Html.fromHtml(significados.toString(), Html.FROM_HTML_MODE_LEGACY))
-        }
-        else {
+            significadoTv.setText(
+                Html.fromHtml(
+                    significados.toString(),
+                    Html.FROM_HTML_MODE_LEGACY
+                )
+            )
+        } else {
             significadoTv.setText(Html.fromHtml(significados.toString()))
         }
     }
